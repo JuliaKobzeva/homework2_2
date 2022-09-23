@@ -7,10 +7,22 @@ public class Human {
     private String gender;
 
     public Human(String name, int yearOfBirth, String town, String job, String gender){
-        this.name = name;
-        this.yearOfBirth = yearOfBirth;
-        this.town = town;
-        this.job = job;
+        if(name == null) {
+            this.name = "Информация не указана";
+        } else this.name = name;
+
+        if(yearOfBirth >= 0){
+            this.yearOfBirth = yearOfBirth;
+        } else this.yearOfBirth = Math.abs(yearOfBirth );
+
+        if(town == null) {
+        this.town = "Информация не указана";
+        } else this.town = town;
+
+        if(job == null) {
+            this.job = "Информация не указана";
+        } else this.job = job;
+
         this.gender = gender;
     }
 
