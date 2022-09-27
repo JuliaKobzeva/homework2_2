@@ -11,9 +11,9 @@ public class Bouquet {
     }
 
     public int getExpiryDays(){
-        int minlifeSpan = 0;
+        int minlifeSpan = 10;
         for (int i= 0; i < flowers.length; i++) {
-            if(flowers[i].lifeSpan < i){
+            if(flowers[i].lifeSpan <  minlifeSpan){
                 minlifeSpan = flowers[i].lifeSpan;
             }
         }
