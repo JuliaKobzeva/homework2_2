@@ -19,7 +19,7 @@ public class Human {
         this.town = "Информация не указана";
         } else this.town = town;
 
-        if(job == null) {
+        if(job == null || job.isEmpty() || job.isBlank()) {
             this.job = "Информация не указана";
         } else this.job = job;
 
@@ -40,6 +40,23 @@ public class Human {
 
     public String getJob(){
         return job;
+    }
+
+    public void setYearOfBirth(int yearOfBirth) {
+        if(yearOfBirth >= 0){
+            this.yearOfBirth = yearOfBirth;
+        } else{
+            this.yearOfBirth = 0;
+        }
+    }
+
+    public void setTown(String town) {
+        if(town != null && !town.isEmpty() && !town.isBlank()){
+            this.town = town;
+        } else{
+            this.town = "Информация не указана";
+        }
+
     }
 
     @Override
