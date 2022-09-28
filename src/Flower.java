@@ -1,9 +1,9 @@
 public class Flower {
-    String name;
-    String flowerColor;
-    String country;
-    double cost;
-    int lifeSpan;
+    private String name;
+    private String flowerColor;
+    private String country;
+    private double cost;
+    private int lifeSpan;
 
     public Flower(String name, String flowerColor,  String country,  double cost, int lifeSpan){
         this.name = name;
@@ -67,6 +67,10 @@ public class Flower {
         } else {
             this.cost = 1.0;
         }
+    }
+
+    public int getLifeSpan() {
+        return lifeSpan;
     }
 
     @Override

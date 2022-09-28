@@ -13,8 +13,8 @@ public class Bouquet {
     public int getExpiryDays(){
         int minlifeSpan = 10;
         for (int i= 0; i < flowers.length; i++) {
-            if(flowers[i].lifeSpan <  minlifeSpan){
-                minlifeSpan = flowers[i].lifeSpan;
+            if(flowers[i].getLifeSpan() <  minlifeSpan){
+                minlifeSpan = flowers[i].getLifeSpan();
             }
         }
         return  minlifeSpan;
@@ -23,7 +23,7 @@ public class Bouquet {
     public double getCost(){
         double sum = 0;
         for (int i= 0; i < flowers.length; i++) {
-            sum = sum + flowers[i].cost;
+            sum = sum + flowers[i].getCost();
         }
         return sum;
     }
