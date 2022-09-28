@@ -1,6 +1,46 @@
 package transport;
 
 public class Car {
+
+    public static class Key{
+        private boolean remoteEngineStart;
+        private boolean keylessAccess;
+
+        public Key(boolean remoteEngineStart, boolean keylessAccess) {
+            this.remoteEngineStart = remoteEngineStart;
+            this.keylessAccess = keylessAccess;
+        }
+
+        public boolean isRemoteEngineStart() {
+            return remoteEngineStart;
+        }
+
+        public boolean isKeylessAccess() {
+            return keylessAccess;
+        }
+    }
+
+    public class Insurance{
+        private String insuranceValidityPeriod;
+        private double insuranceCost;
+        private int insuranceNumber;
+
+        public Insurance(String insuranceValidityPeriod, double insuranceCost, int insuranceNumber) {
+            if(insuranceValidityPeriod == null || insuranceValidityPeriod.isEmpty() || insuranceValidityPeriod.isBlank()){
+                this.insuranceValidityPeriod = "default";
+            }else this.insuranceValidityPeriod = insuranceValidityPeriod;
+
+            if(insuranceCost < 0){
+                this.insuranceCost = Math.abs(insuranceCost);
+            }else this.insuranceCost = insuranceCost;
+
+            if(insuranceNumber < 0){
+                this.insuranceNumber = Math.abs(insuranceNumber);
+            }else this.insuranceNumber = insuranceNumber;
+        }
+    }
+
+    private Key key;
     private String brand;
     private String model;
     private double engineVolume;
@@ -20,11 +60,11 @@ public class Car {
 
 
     public Car(String brand, String model, double engineVolume, String color, int productionYear, String productionCountry,  String transmission, String bodyType,  String registrationNumber,  int numberOfSeats, String summerOrWinterTires){
-        if(brand == null || transmission.isEmpty() || transmission.isBlank()){
+        if(brand == null || brand.isEmpty() || brand.isBlank()){
             this.brand = "default";
         }else this.brand = brand;
 
-        if(model == null || transmission.isEmpty() || transmission.isBlank()){
+        if(model == null || model.isEmpty() || model.isBlank()){
             this.model = "default";
         }else this.model = model;
 
@@ -32,7 +72,7 @@ public class Car {
             this.engineVolume = 1.5;
         }else this.engineVolume = engineVolume;
 
-        if(color == null || transmission.isEmpty() || transmission.isBlank()){
+        if(color == null || color.isEmpty() || color.isBlank()){
             this.color = "белый";
         }else this.color = color;
 
@@ -40,7 +80,7 @@ public class Car {
             this.productionYear = 2000;
         }else this.productionYear = productionYear;
 
-        if(productionCountry == null || transmission.isEmpty() || transmission.isBlank()){
+        if(productionCountry == null || productionCountry.isEmpty() || productionCountry.isBlank()){
             this.productionCountry = "default";
         }else this.productionCountry = productionCountry;
 
@@ -142,5 +182,13 @@ public class Car {
     @Override
     public String toString() {
         return brand + " " + model + ", объем двигателя: " + engineVolume + " литра, цвет кузова: " + color + ", год выпуска: " + productionYear + ", страна сборки: " + productionCountry + ", коробка передач: " + transmission + ", тип кузова: " + bodyType + ", регистрационный номер: " + registrationNumber + ", количество мест: " + numberOfSeats + ", тип резины: " +summerOrWinterTires;
+    }
+
+    public void changeTires(Car car){
+        if(summerOrWinterTires == "летняя"){
+            setSummerOrWinterTires("зимняя");
+        } else {
+            setSummerOrWinterTires("летняя");
+        }
     }
 }
