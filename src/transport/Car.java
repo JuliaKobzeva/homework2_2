@@ -1,5 +1,7 @@
 package transport;
 
+import java.time.LocalDate;
+
 public class Car {
 
     public static class Key{
@@ -11,36 +13,81 @@ public class Car {
             this.keylessAccess = keylessAccess;
         }
 
-        public boolean isRemoteEngineStart() {
-            return remoteEngineStart;
-        }
+       public Key() {
+            this(false, false);
+       }
 
-        public boolean isKeylessAccess() {
-            return keylessAccess;
+        @Override
+        public String toString() {
+            return remoteEngineStart + " " + keylessAccess;
         }
     }
 
     public class Insurance{
-        private String insuranceValidityPeriod;
+        private LocalDate insuranceValidityPeriod;
         private double insuranceCost;
-        private int insuranceNumber;
+        private String insuranceNumber;
 
-        public Insurance(String insuranceValidityPeriod, double insuranceCost, int insuranceNumber) {
-            if(insuranceValidityPeriod == null || insuranceValidityPeriod.isEmpty() || insuranceValidityPeriod.isBlank()){
-                this.insuranceValidityPeriod = "default";
-            }else this.insuranceValidityPeriod = insuranceValidityPeriod;
+        public Insurance(LocalDate insuranceValidityPeriod, double insuranceCost, String insuranceNumber) {
+
+            if(insuranceValidityPeriod == null){
+                this.insuranceValidityPeriod = LocalDate.now().plusDays(365);
+            } else {
+                this.insuranceValidityPeriod = insuranceValidityPeriod;
+            }
 
             if(insuranceCost < 0){
                 this.insuranceCost = Math.abs(insuranceCost);
             }else this.insuranceCost = insuranceCost;
 
-            if(insuranceNumber < 0){
-                this.insuranceNumber = Math.abs(insuranceNumber);
+            if(insuranceNumber.length() != 9){
+                System.out.println("Номер страховки некорректный.");
             }else this.insuranceNumber = insuranceNumber;
+        }
+
+        public Insurance(){
+            this(null,10_000, "123456789");
+        }
+
+        public LocalDate getInsuranceValidityPeriod() {
+            return insuranceValidityPeriod;
+        }
+
+        public void setInsuranceValidityPeriod(LocalDate insuranceValidityPeriod) {
+            this.insuranceValidityPeriod = insuranceValidityPeriod;
+        }
+
+        public double getInsuranceCost() {
+            return insuranceCost;
+        }
+
+        public void setInsuranceCost(double insuranceCost) {
+            this.insuranceCost = insuranceCost;
+        }
+
+        public String getInsuranceNumber() {
+            return insuranceNumber;
+        }
+
+        public void setInsuranceNumber(String insuranceNumber) {
+            this.insuranceNumber = insuranceNumber;
+        }
+
+        public void checkInsuranceValidityPeriod(){
+            if(insuranceValidityPeriod.isBefore(LocalDate.now()) || insuranceValidityPeriod.isEqual(LocalDate.now())){
+                System.out.println("Нужно срочно оформить новую страховку.");
+            }
+        }
+
+        @Override
+        public String toString() {
+            return insuranceValidityPeriod + " " + insuranceCost + " " + insuranceNumber;
         }
     }
 
     private Key key;
+
+    private Insurance insurance;
     private String brand;
     private String model;
     private double engineVolume;
@@ -59,7 +106,9 @@ public class Car {
     private String summerOrWinterTires;
 
 
-    public Car(String brand, String model, double engineVolume, String color, int productionYear, String productionCountry,  String transmission, String bodyType,  String registrationNumber,  int numberOfSeats, String summerOrWinterTires){
+    public Car(String brand, String model, double engineVolume, String color, int productionYear, String productionCountry,
+               String transmission, String bodyType,  String registrationNumber,  int numberOfSeats, String summerOrWinterTires,
+               Key key, Insurance insurance){
         if(brand == null || brand.isEmpty() || brand.isBlank()){
             this.brand = "default";
         }else this.brand = brand;
@@ -103,6 +152,14 @@ public class Car {
         if(summerOrWinterTires == null || summerOrWinterTires.isEmpty() || summerOrWinterTires.isBlank()){
             this.summerOrWinterTires = "default";
         }else this.summerOrWinterTires = summerOrWinterTires;
+
+        if(key == null){
+            this.key = new Key();
+        }else this.key = key;
+
+        if(key == null){
+        this.insurance = new Insurance();
+        }else this.insurance = insurance;
     }
 
     public String getBrand() {
@@ -181,7 +238,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return brand + " " + model + ", объем двигателя: " + engineVolume + " литра, цвет кузова: " + color + ", год выпуска: " + productionYear + ", страна сборки: " + productionCountry + ", коробка передач: " + transmission + ", тип кузова: " + bodyType + ", регистрационный номер: " + registrationNumber + ", количество мест: " + numberOfSeats + ", тип резины: " +summerOrWinterTires;
+        return brand + " " + model + ", объем двигателя: " + engineVolume + " литра, цвет кузова: " + color + ", год выпуска: " +
+                productionYear + ", страна сборки: " + productionCountry + ", коробка передач: " + transmission + ", тип кузова: " +
+                bodyType + ", регистрационный номер: " + registrationNumber + ", количество мест: " + numberOfSeats + ", тип резины: "
+                + summerOrWinterTires;
     }
 
     public void changeTires(Car car){
@@ -190,5 +250,21 @@ public class Car {
         } else {
             setSummerOrWinterTires("летняя");
         }
+    }
+
+    public boolean isCorrectRegNumber(){
+        //x000xx000
+        if(registrationNumber.length() != 9){
+            return false;
+        }
+        char[]chars = registrationNumber.toCharArray();
+        if(!Character.isAlphabetic(chars[0]) || !Character.isAlphabetic(chars[4]) || !Character.isAlphabetic(chars[5])){
+            return false;
+        }
+        if(!Character.isDigit(chars[1]) || !Character.isDigit(chars[2]) || !Character.isDigit(chars[3]) ||
+                !Character.isDigit(chars[6]) || !Character.isDigit(chars[7]) || !Character.isDigit(chars[8])){
+            return false;
+        }
+        return true;
     }
 }
