@@ -25,5 +25,6 @@ public class Main {
 
         System.out.println("Букет простоит " + bouquet1.getExpiryDays() + " дней.");
         System.out.println("Букет стоит " + bouquet1.getCost() + " рублей.");
+        bouquet1.printInfo(bouquet1);
     }
 }

@@ -33,6 +33,10 @@ public class Flower {
         }
     }
 
+    public String getName() {
+        return name;
+    }
+
     public String getFlowerColor() {
         return flowerColor;
     }
