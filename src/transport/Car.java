@@ -236,6 +236,22 @@ public class Car {
         }else this.summerOrWinterTires = summerOrWinterTires;
     }
 
+    public Key getKey() {
+        return key;
+    }
+
+    public void setKey(Key key) {
+        this.key = key;
+    }
+
+    public Insurance getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Insurance insurance) {
+        this.insurance = insurance;
+    }
+
     @Override
     public String toString() {
         return brand + " " + model + ", объем двигателя: " + engineVolume + " литра, цвет кузова: " + color + ", год выпуска: " +
